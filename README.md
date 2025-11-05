@@ -1,0 +1,2 @@
+# ver
+ver (husk liten v) er et rammeverk som fungerer litt som React.js bare at det er mye dårligere. ver står for ***V**erdilesende rammeverk for **E**kte verdier som kan vises på din **R**are nettside*
