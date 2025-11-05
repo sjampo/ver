@@ -58,27 +58,19 @@ class VerMain {
             }
         })
 
-        if (thisVer.type == "insert") {
-            // insert target content and wake any child vers
-            // loadText(thisVer.val, text => {
-            //     console.log(text)
-            //     ver.innerHTML = text
-            //     ver.querySelectorAll("ver").forEach(childVer => wake(childVer, forNext))
-            // })
-            this.loadTextRecursive(thisVer.val, ver, forNext)
-
-        } else if (thisVer.type == "get") {
-            // insert content from parent ver
-            if (fromLast) {
-                let val = fromLast[thisVer.val]
-                val ? ver.innerHTML = val : console.warn("Missing attribute: \"" + thisVer.val + "\"\nParent:", fromLast.ver, "\nChild:", ver)
-            } else {
-                console.warn("First generation ver cannot have type \"get\".\nCulprit:", ver)
-            }
-
-        } else if (thisVer.type == "await") {
-            // wait for ver to have child
-
+        switch (thisVer.type) {
+            case "insert":
+                this.loadTextRecursive(thisVer.val, ver, forNext)
+                break
+                
+            case "get":
+                if (fromLast) {
+                    let val = fromLast[thisVer.val]
+                    val ? ver.innerHTML = val : console.warn("Missing attribute: \"" + thisVer.val + "\"\nParent:", fromLast.ver, "\nChild:", ver)
+                } else {
+                    console.warn("First generation ver cannot have type \"get\".\nCulprit:", ver)
+                }
+                break
         }
 
         ver.style.display = originalDisplay
