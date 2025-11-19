@@ -7,6 +7,10 @@ const documentInitVers = document.querySelectorAll("ver")
 // })
 
 class VerMain {
+    constructor() {
+        this.checkpoints = {}
+    }
+
     loadText(fileName, callback) {
         fetch(config.root + "/" + fileName).then(content => content.text().then(text => {
             callback(text)
@@ -15,6 +19,10 @@ class VerMain {
     
     loadTextRecursive(fileName, parent, forNext) {
         fetch(config.root + "/" + fileName).then(content => content.text().then(text => {
+            if (typeof parent == "string") {
+                // if parent from checkpoint
+                parent = this.checkpoints[parent]
+            }
             parent.innerHTML = '<div class="vercontainer"></div>'
             const container = parent.querySelector(".vercontainer")
             container.innerHTML = text
@@ -70,6 +78,10 @@ class VerMain {
                 } else {
                     console.warn("First generation ver cannot have type \"get\".\nCulprit:", ver)
                 }
+                break
+
+            case "check":
+                this.checkpoints[thisVer.val] = ver
                 break
         }
 
