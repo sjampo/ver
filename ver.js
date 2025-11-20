@@ -23,9 +23,19 @@ class VerMain {
                 // if parent from checkpoint
                 parent = this.checkpoints[parent]
             }
+
             parent.innerHTML = '<div class="vercontainer"></div>'
             const container = parent.querySelector(".vercontainer")
             container.innerHTML = text
+            
+            // load scripts
+            const scripts = parent.querySelectorAll("script")
+            scripts.forEach(script => {
+                const realScript = document.createElement("script")
+                realScript.textContent = script.innerHTML
+                document.body.appendChild(realScript)
+            })
+
             container.querySelectorAll("ver").forEach(childVer => this.wake(childVer, forNext))
         }))
     }
